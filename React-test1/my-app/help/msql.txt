@@ -1,0 +1,19 @@
+in:
+E:\mysql-8.0.30\MySQL_Home\bin
+cmd: mysqld --console
+cmd: mysql -u root -p
+default pass: <blank>
+
+change password:
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
+create DATABASE <name>;
+select host,user from mysql.user;
+/--------
+CREATE USER 'user_test'@'113.yy.xx.94' IDENTIFIED BY 'YOUR_PWD';
+GRANT ALL ON *.* TO 'user_test'@'113.yy.xx.94';
+FLUSH PRIVILEGES;
+/--------
+SE database_name;
+SHOW TABLES;
+--find runed msql
+mysqld --console

@@ -1,0 +1,44 @@
+--------------------------- test ssl key
+
+openssl rsa -in private.key -check
+openssl x509 -in certificate.crt -text -noout
+openssl req -text -noout -verify -in certificate_authorities.csr
+OR
+openssl rsa -modulus -noout -in server.key | openssl md5
+openssl x509 -modulus -noout -in server.crt | openssl md5
+
+--------- generation key
+openssl genrsa -des3 -out domain.key 2048
+openssl req -key domain.key -new -out domain.csr
+-- openssl req -newkey rsa:2048 -keyout domain.key -out domain.csr
+openssl x509 -in cert.crt -out cert.pem
+
+//-------- complate create key and ....
+Creating a Private Key with password:
+1- openssl genrsa -des3 -out keycloak.key 2048
+Creating a Certificate Signing Request:
+2- openssl req -key keycloak.key -new -out keycloak.csr
+Creating a CA-Signed Certificate With Our Own CA
+3- Create a Self-Signed Root CA
+	openssl req -x509 -sha256 -days 1825 -newkey rsa:2048 -keyout keycloakCA.key -out keycloakCA.crt
+4- Sign Our CSR With Root CA
+	create a configuration text-file selfDomain.ext:
+	
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = keycloak.xxxxxxxx.com
+DNS.2 = xxxxxxxxx
+	
+5- sign our CSR (keycloak.csr) with the keycloak CA certificate and its private key:
+openssl x509 -req -CA keycloakCA.crt -CAkey keycloakCA.key -in keycloak.csr -out keycloak.crt -days 365 -CAcreateserial -extfile selfDomain.ext	
+//---------------------------
+convert Convert CRT to PEM:
+1- openssl x509 -in keycloak.crt -out keycloak.pem
+convert Convert key to PEM:
+1- openssl rsa -in keycloak.key -text > keycloak.key.pem
+//-----------------------------------------
+
+create java p12:
+openssl pkcs12 -export -out  nginx.p12 -in nginx.crt -inkey nginx.key

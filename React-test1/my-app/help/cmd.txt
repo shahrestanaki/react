@@ -1,0 +1,19 @@
+ipconfig -flushdns
+-------------------------
+netstat -a -n -p tcp -o  : get all port and app
+-------------------------
+netstat -ano | findstr :8080
+netstat -ano|findstr "PID :8080"
+
+taskkill /PID 608 /F
+-------------------------
+//-------change local temp version
+setlocal
+set JAVA_HOME="C:\Program Files\Java\jdk1.8.0_311"
+set PATH=%JAVA_HOME%\bin;%PATH%;
+java -version
+-------------------------
+//------ clone to specific folder
+git clone https://github.com/openzipkin/zipkin E:\zipkin
+
+

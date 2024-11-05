@@ -1,0 +1,49 @@
+version: 1.25.0
+//------ nginx for Windows:
+
+start : 
+		cd nginx-1.25.0
+		start nginx
+nginx processes: 
+		tasklist /fi "imagename eq nginx.exe"
+		
+nginx -s stop 	fast shutdown
+nginx -s quit 	graceful shutdown
+nginx -s reload 	changing configuration, starting new worker processes with a new configuration, graceful shutdown of old worker processes
+nginx -s reopen 	re-opening log files
+nginx -t 			check config
+taskkill /f /IM nginx.exe kill all processes
+
+Default listen address : http://localhost		
+
+//------ linux
+check version: 
+	nginx -v
+	systemctl status nginx.service
+
+install:
+	sudo yum install nginx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------
